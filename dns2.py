@@ -24,6 +24,7 @@ def main():
     def process_packet(packet):
         print(packet)
         packet.accept()  # Continue processing the packet
+        #packet.drop()
 
     # Add the iptables rule before starting the queue
     add_iptables_rule()
